@@ -1,0 +1,26 @@
+# Ejecutar modelo tuberias + camiones
+
+model modelamiento_camiones.mod;
+data camiones_datos.dat;
+
+option solver gurobi;
+
+solve;
+
+# resultados
+display CostoTotal;
+
+# tuberias construidas
+display {(i,j) in E: x[i,j] > 0.5} x[i,j];
+
+# flujos tuberias
+display {(i,j) in E: y[i,j] > 0} y[i,j];
+
+# rutas camion activadas
+display {(i,j) in EP: z[i,j] > 0.5} z[i,j];
+
+# flujos camion
+display {(i,j) in EP: w[i,j] > 0} w[i,j];
+
+# nodos que reciben agua por camion
+display {n in P: r[n] > 0.5} r[n];

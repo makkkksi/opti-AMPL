@@ -1,0 +1,62 @@
+# datos red hidrica
+# 2 desaladoras, 3 poblados, 2 mineras, 2 nodos de paso
+
+set N := D1 D2 P1 P2 P3 M1 M2 T1 T2;
+
+set D := D1 D2;
+set P := P1 P2 P3;
+set M := M1 M2;
+
+# arcos
+set E :=
+    (D1,T1) (D2,M1)
+    (D1,T2) (D2,T1)
+    (T1,P1) (T1,P2) (T1,M1)
+    (T2,P2) (T2,P3) (T2,M2)
+    (M1,P3) (P2,M2);
+
+# oferta desaladoras en litros
+param S :=
+    D1  500
+    D2  400;
+
+# demanda en litros
+param G :=
+    P1  150
+    P2  200
+    P3  100
+    M1  250
+    M2  150;
+
+# costo fijo por arco
+param f :=
+    D1 T1   10
+    D1 T2   15
+    D2 T1   12
+    D2 M1    8
+    T1 P1    6
+    T1 P2    7
+    T1 M1    9
+    T2 P2   11
+    T2 P3    5
+    T2 M2    8
+    P2 M2   14
+    M1 P3   13;
+
+# costo variable por litro
+param c :=
+    D1 T1   0.05
+    D1 T2   0.08
+    D2 T1   0.06
+    D2 M1   0.03
+    T1 P1   0.047
+    T1 P2   0.05
+    T1 M1   0.07
+    T2 P2   0.06
+    T2 P3   0.03
+    T2 M2   0.05
+    P2 M2   0.09
+    M1 P3   0.08;
+
+# el fakin bigm
+param BigM := 900;

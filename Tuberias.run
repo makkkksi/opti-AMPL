@@ -1,0 +1,17 @@
+
+
+model modelamiento_tuberias.mod;
+data tuberias_datos.dat;
+option solver gurobi; #gurobi porque es lo q hizo el profe (nose si hay q cambiarlo??)
+
+
+solve;
+
+# printear el costo
+display CostoTotal;
+
+# las tuberias construidas
+display {(i,j) in E: x[i,j] > 0.5} x[i,j];
+
+# los flujos por tubreia
+display {(i,j) in E: y[i,j] > 0} y[i,j];

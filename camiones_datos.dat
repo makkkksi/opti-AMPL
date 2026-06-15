@@ -1,0 +1,80 @@
+# datos red hidrica con camiones
+# misma red de tuberias + red vial para camiones
+
+# nodos (mismos que tuberias)
+set N := D1 D2 P1 P2 P3 M1 M2 T1 T2;
+
+set D := D1 D2;
+set P := P1 P2 P3;
+set M := M1 M2;
+
+# arcos tuberias (mismos que antes)
+set E :=
+    (D1,T1) (D2,M1)
+    (D1,T2) (D2,T1)
+    (T1,P1) (T1,P2) (T1,M1)
+    (T2,P2) (T2,P3) (T2,M2)
+    (M1,P3) (P2,M2);
+
+# arcos red vial camiones (solo terminan en poblados)
+set EP :=
+    (D1,P1) (D1,P2)
+    (D2,P2) (D2,P3)
+    (T1,P3) (T2,P1);
+
+# oferta desaladoras
+param S :=
+    D1  500
+    D2  400;
+
+# demanda
+param G :=
+    P1  150
+    P2  200
+    P3  100
+    M1  250
+    M2  150;
+
+# costo fijo tuberias
+param f :=
+    D1 T1   10
+    D1 T2   15
+    D2 T1   12
+    D2 M1    8
+    T1 P1   40
+    T1 P2    7
+    T1 M1    9
+    T2 P2   11
+    T2 P3   35
+    T2 M2    8
+    P2 M2   14
+    M1 P3   13;
+
+# costo variable tuberias
+param c :=
+    D1 T1   0.05
+    D1 T2   0.08
+    D2 T1   0.06
+    D2 M1   0.03
+    T1 P1   0.047
+    T1 P2   0.05
+    T1 M1   0.07
+    T2 P2   0.06
+    T2 P3   0.03
+    T2 M2   0.05
+    P2 M2   0.09
+    M1 P3   0.08;
+
+# costo fijo por ruta camion activada
+param d := 20;
+
+# costo variable camion por litro
+param g :=
+    D1 P1   0.12
+    D1 P2   0.15
+    D2 P2   0.11
+    D2 P3   0.13
+    T1 P3   0.10
+    T2 P1   0.14;
+
+param BigM := 900;
