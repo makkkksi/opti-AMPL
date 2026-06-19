@@ -34,9 +34,9 @@ minimize CostoTotal:
     sum{(i,j) in E} (f[i,j]*x[i,j] + c[i,j]*y[i,j])
     + sum{(i,j) in ER} (d*z[i,j] + g[i,j]*w[i,j]);
 
-# desaladoras no superan oferta
+# desaladoras no superan oferta (tanto tuberias como camion
 subject to OfertaDesaladora{n in D}:
-    sum{(n,j) in E} y[n,j] <= S[n];
+    sum{(n,j) in E} y[n,j] + sum{(n,j) in ER} w[n,j] <= S[n];
 
 # nodos de paso
 subject to Transito{n in N diff (D union P union M)}:
@@ -49,9 +49,9 @@ subject to ActivacionFlujo{(i,j) in E}:
 # cada consumidor recibe exactamente su demanda neta (tuberias + camiones)
 subject to DemandaConsumidor{n in P union M}:
     sum{(i,n) in E} y[i,n] - sum{(n,j) in E} y[n,j]
-    + sum{(i,n) in ER} w[i,n] = G[n];
+    + sum{(i,n) in ER} w[i,n] - sum{(n,j) in ER} w[n,j] = G[n];
 
-# camiones solo abastecen poblados
+# camiones solo abastecen poblados como destino final
 subject to CamionSoloPoblados{(i,j) in ER: j in M}:
     w[i,j] = 0;
 
@@ -73,4 +73,4 @@ subject to DetectaEntradaCamion{n in P}:
 
 # si recibe por camion no puede reenviar por tuberia
 subject to NoRetorno{n in P}:
-    sum{(n,j) in E} y[n,j] <= BigM * (1 - r[n]);	
+    sum{(n,j) in E} y[n,j] <= BigM * (1 - r[n]);
