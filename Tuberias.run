@@ -1,7 +1,7 @@
 
 
 model modelamiento_tuberias.mod;
-data tuberias_datos.dat;
+data red_solo_aguas.dat;
 option solver gurobi; #gurobi porque es lo q hizo el profe (nose si hay q cambiarlo??)
 
 
